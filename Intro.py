@@ -8,21 +8,9 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Estilo personalizado para mejorar la tipografía y los contenedores
-st.markdown("""
-    <style>
-    .stApp {
-        background-color: #f8f9fa;
-    }
-    div[data-testid="stVerticalBlock"] > div[data-testid="stBlock"] {
-        border-radius: 10px;
-    }
-    </style>
-""", unsafe_allow_html=True)
-
 # 2. Barra Lateral (Sidebar)
 with st.sidebar:
-    st.title("🤖 Repositorio")
+    st.title("🤖 Repositorio IA")
     
     st.subheader("Acerca del Proyecto")
     parrafo = (
