@@ -22,7 +22,7 @@ st.markdown("""
 
 # 2. Barra Lateral (Sidebar)
 with st.sidebar:
-    st.title("🤖 Repositorio IA")
+    st.title("🤖 Repositorio")
     
     st.subheader("Acerca del Proyecto")
     parrafo = (
