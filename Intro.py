@@ -2,7 +2,7 @@ import streamlit as st
 
 # 1. Configuración de la página
 st.set_page_config(
-    page_title="Repositorio de Aplicaciones IA - Juana",
+    page_title="Repositorio de Aplicaciones- Juana",
     page_icon="🚀",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -10,7 +10,7 @@ st.set_page_config(
 
 # 2. Barra Lateral (Sidebar)
 with st.sidebar:
-    st.title("🤖 Repositorio IA")
+    st.title("🤖 Repositorio")
     
     st.subheader("Acerca del Proyecto")
     parrafo = (
