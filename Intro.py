@@ -26,7 +26,7 @@ with st.sidebar:
     st.markdown(f"📖 [Sitio Oficial de Guías y Ejercicios]({url_ia})")
 
 # 3. Encabezado Principal
-st.title("🚀 Repositorio de Aplicaciones de Inteligencia Artificial")
+st.title("🚀 Repositorio de Aplicaciones")
 st.write("Explora las diferentes páginas web desarrolladas a lo largo del semestre organizadas por fecha de clase.")
 
 st.divider()
