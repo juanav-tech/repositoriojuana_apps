@@ -26,10 +26,9 @@ with st.sidebar:
     
     st.subheader("Acerca del Proyecto")
     parrafo = (
-        "La Inteligencia Artificial permite mejorar la toma de decisiones "
-        "con el uso de datos, automatizar tareas rutinarias y proporcionar "
-        "análisis avanzados en tiempo real, lo que resulta en una mayor eficiencia "
-        "y precisión en diversos campos."
+        "En este repositorio se encuentran centralizadas las distintas páginas "
+        "web e interfaces interactivas diseñadas y desarrolladas a lo largo del "
+        "semestre en la asignatura."
     )
     st.write(parrafo)
     
@@ -40,7 +39,7 @@ with st.sidebar:
 
 # 3. Encabezado Principal
 st.title("🚀 Repositorio de Aplicaciones de Inteligencia Artificial")
-st.write("Explora las diferentes aplicaciones desarrolladas a lo largo del curso organizadas por fecha de clase.")
+st.write("Explora las diferentes páginas web desarrolladas a lo largo del semestre organizadas por fecha de clase.")
 
 st.divider()
 
