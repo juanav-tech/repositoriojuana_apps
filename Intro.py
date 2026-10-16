@@ -38,8 +38,8 @@ tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs([
     "📅 03 de Septiembre", 
     "📅 17 de Septiembre",
     "📅 24 de Septiembre",
-    "📅 8 de Septiembre",
-    "📅 15 de Septiembre"
+    "📅 8 de Octubre",
+    "📅 15 de Octubre"
 ])
 
 # ---------------------------------------------------------
