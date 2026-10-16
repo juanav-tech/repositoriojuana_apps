@@ -1,125 +1,147 @@
+import os
 import streamlit as st
+from bokeh.models.widgets import Button
+from bokeh.models import CustomJS
+from streamlit_bokeh_events import streamlit_bokeh_events
+from PIL import Image
+import time
+import glob
+import paho.mqtt.client as paho
+import json
+from gtts import gTTS
+from googletrans import Translator
 
-# 1. Configuración de la página
+# Configuración de página con diseño estético
 st.set_page_config(
-    page_title="Repositorio de Aplicaciones - Juana",
-    page_icon="🚀",
-    layout="wide",
-    initial_sidebar_state="expanded"
+    page_title="Control de Puerta por Voz - Smart Home",
+    page_icon="🚪",
+    layout="centered"
 )
 
-# 2. Barra Lateral (Sidebar)
-with st.sidebar:
-    st.title("🤖 Repositorio")
-    
-    st.subheader("Acerca del Proyecto")
-    parrafo = (
-        "En este repositorio se encuentran centralizadas las distintas páginas "
-        "web e interfaces interactivas diseñadas y desarrolladas a lo largo del "
-        "semestre en la asignatura."
-    )
-    st.write(parrafo)
-    
-    st.markdown("---")
-    url_ia = "https://sites.google.com/view/aplicacionesdeia/inicio"
-    st.subheader("Recursos Adicionales")
-    st.markdown(f"📖 [Sitio Oficial de Guías y Ejercicios]({url_ia})")
+# Estilos CSS personalizados (incluye la corrección para eliminar bordes blancos en componentes de Bokeh)
+st.markdown("""
+    <style>
+    .stApp {
+        background-color: #0F172A;
+        color: #F8FAFC;
+    }
+    .main-header {
+        background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+        padding: 24px;
+        border-radius: 14px;
+        border-left: 6px solid #38BDF8;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        text-align: center;
+    }
+    .card {
+        background-color: #1E293B;
+        padding: 25px;
+        border-radius: 12px;
+        border: 1px solid #334155;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+    /* Estilo para integrar el botón de Bokeh sin fondos blancos */
+    .bk-root {
+        display: flex;
+        justify-content: center;
+    }
+    .bk-btn {
+        background-color: #38BDF8 !important;
+        color: #0F172A !important;
+        border: none !important;
+        border-radius: 8px !important;
+        font-weight: bold !important;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.2) !important;
+    }
+    .bk-btn:hover {
+        background-color: #0EA5E9 !important;
+    }
+    </style>
+""", unsafe_allow_html=True)
 
-# 3. Encabezado Principal
-st.title("🚀 Repositorio de Aplicaciones")
-st.write("Explora las diferentes páginas web desarrolladas a lo largo del semestre organizadas por fecha de clase.")
+def on_publish(client, userdata, result):                     
+    print("el dato ha sido publicado \n")
+    pass
 
-st.markdown("---")
+def on_message(client, userdata, message):
+    global message_received
+    time.sleep(2)
+    message_received = str(message.payload.decode("utf-8"))
+    st.write(message_received)
 
-# ---------------------------------------------------------
-# PRIMERA ENTREGA
-# ---------------------------------------------------------
-st.subheader("📌 Primera Entrega")
+broker = "broker.mqttdashboard.com"
+port = 1883
+client1 = paho.Client("ClienteJuana")
+client1.on_message = on_message
 
-tab1, tab2, tab3, tab4 = st.tabs([
-    "📅 20 de Agosto", 
-    "📅 27 de Agosto", 
-    "📅 03 de Septiembre", 
-    "📅 17 de Septiembre"
-])
+# Encabezado estético de la interfaz multimodal
+st.markdown("""
+    <div class="main-header">
+        <h1 style="color: #FFFFFF; margin: 0; font-size: 26px;">🚪 Control de Puerta por Voz</h1>
+        <p style="color: #94A3B8; margin: 5px 0 0 0;">Interfaz Multimodal conectada con Wokwi vía MQTT</p>
+    </div>
+""", unsafe_allow_html=True)
 
-# CLASE 1: 20 DE AGOSTO
-with tab1:
-    st.header("Clase: 20 de Agosto")
-    st.caption("Introducción a interfaces interactivas y multimodalidad básica.")
-    
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        with st.container(border=True):
-            st.subheader("🌐 Mi Primera App")
-            st.write("Aplicación inicial para explorar el despliegue de modelos e interfaces en Streamlit.")
-            st.link_button("Abrir Aplicación ↗", "https://miprimerappjuana.streamlit.app/", use_container_width=True)
+# Contenedor y visualización de imagen centrada
+col1, col2, col3 = st.columns([1, 2, 1])
+with col2:
+    try:
+        image = Image.open('voice_ctrl.jpg')
+        st.image(image, use_column_width=True)
+    except Exception:
+        pass
 
-    with col2:
-        with st.container(border=True):
-            st.subheader("🔊 Texto a Audio")
-            st.write("Interfaz multimodal capaz de procesar entrada de texto y sintetizar voz artificial.")
-            st.link_button("Abrir Aplicación ↗", "https://interfacesmultiodalesj.streamlit.app/", use_container_width=True)
+# Tarjeta principal para la interacción de voz
+st.markdown('<div class="card">', unsafe_allow_html=True)
+st.subheader("🎙️ Asistente de Acceso")
+st.write("Di un comando como **'cerrar puerta'** para enviar la orden al simulador.")
 
-# CLASE 2: 27 DE AGOSTO
-with tab2:
-    st.header("Clase: 27 de Agosto")
-    st.caption("Traducción de lenguaje natural, visión por computador u OCR.")
-    
-    col1, col2, col3 = st.columns(3)
-    
-    with col1:
-        with st.container(border=True):
-            st.subheader("🗣️ Traductor")
-            st.write("Herramienta para procesamiento y traducción automática de lenguaje natural.")
-            st.link_button("Abrir Aplicación ↗", "https://traductorjuu.streamlit.app/", use_container_width=True)
+# Botón de Bokeh
+stt_button = Button(label="🎙️ Hablar para Cerrar Puerta", width=280)
 
-    with col2:
-        with st.container(border=True):
-            st.subheader("📷 OCR Cámara")
-            st.write("Reconocimiento óptico de caracteres en tiempo real utilizando entrada de cámara.")
-            st.link_button("Abrir Aplicación ↗", "https://ocrcamara.streamlit.app/", use_container_width=True)
+stt_button.js_on_event("button_click", CustomJS(code="""
+    var recognition = new webkitSpeechRecognition();
+    recognition.continuous = true;
+    recognition.interimResults = true;
+ 
+    recognition.onresult = function (e) {
+        var value = "";
+        for (var i = e.resultIndex; i < e.results.length; ++i) {
+            if (e.results[i].isFinal) {
+                value += e.results[i][0].transcript;
+            }
+        }
+        if ( value != "") {
+            document.dispatchEvent(new CustomEvent("GET_TEXT", {detail: value}));
+        }
+    }
+    recognition.start();
+    """))
 
-    with col3:
-        with st.container(border=True):
-            st.subheader("🎙️ OCR + Audio")
-            st.write("Extracción de texto desde imágenes con lectura asistida mediante síntesis de voz.")
-            st.link_button("Abrir Aplicación ↗", "https://ocr-audiojuu.streamlit.app/", use_container_width=True)
+result = streamlit_bokeh_events(
+    stt_button,
+    events="GET_TEXT",
+    key="listen",
+    refresh_on_update=False,
+    override_height=75,
+    debounce_time=0)
 
-# CLASE 3: 03 DE SEPTIEMBRE
-with tab3:
-    st.header("Clase: 3 de Septiembre")
-    st.caption("Procesamiento de Lenguaje Natural (PLN) y análisis de texto.")
-    
-    col1, col2, col3 = st.columns(3)
-    
-    with col1:
-        with st.container(border=True):
-            st.subheader("☁️ Wordcloud Studio")
-            st.write("Generador de nubes de palabras para análisis de frecuencia y representación visual de texto.")
-            st.link_button("Abrir Aplicación ↗", "https://Wordclouddju.streamlit.app", use_container_width=True)
+if result:
+    if "GET_TEXT" in result:
+        spoken_text = result.get("GET_TEXT")
+        st.success(f"Comando reconocido: **{spoken_text}**")
+        
+        # Lógica de conexión y publicación MQTT intacta
+        client1.on_publish = on_publish                                     
+        client1.connect(broker, port)  
+        message = json.dumps({"Act1": spoken_text.strip()})
+        ret = client1.publish("voicejuana", message)
 
-    with col2:
-        with st.container(border=True):
-            st.subheader("😊 Análisis de Sentimientos")
-            st.write("Clasificación de emociones y polaridad en textos mediante PLN.")
-            st.link_button("Abrir Aplicación ↗", "https://sentimentalju.streamlit.app/", use_container_width=True)
+st.markdown('</div>', unsafe_allow_html=True)
 
-    with col3:
-        with st.container(border=True):
-            st.subheader("📊 TF-IDF en Español")
-            st.write("Cálculo de relevancia de palabras clave en corpus de texto en idioma español.")
-            st.link_button("Abrir Aplicación ↗", "https://tdfespju.streamlit.app/", use_container_width=True)
-
-# CLASE 4: 17 DE SEPTIEMBRE
-with tab4:
-    st.header("Clase: 17 de Septiembre")
-    st.caption("Modelos avanzados de visión por computador y transferencia de aprendizaje.")
-    
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        with st.container(border=True):
-            st.subheader("🔍 Detección de Objetos (YOLOv5)")
-            st
+try:
+    os.mkdir("temp")
+except:
+    pass
