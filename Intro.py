@@ -2,7 +2,7 @@ import streamlit as st
 
 # 1. Configuración de la página
 st.set_page_config(
-    page_title="Repositorio de Aplicaciones- Juana",
+    page_title="Repositorio de Aplicaciones - Juana",
     page_icon="🚀",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -20,7 +20,7 @@ with st.sidebar:
     )
     st.write(parrafo)
     
-    st.divider()
+    st.markdown("---")
     url_ia = "https://sites.google.com/view/aplicacionesdeia/inicio"
     st.subheader("Recursos Adicionales")
     st.markdown(f"📖 [Sitio Oficial de Guías y Ejercicios]({url_ia})")
@@ -29,9 +29,13 @@ with st.sidebar:
 st.title("🚀 Repositorio de Aplicaciones")
 st.write("Explora las diferentes páginas web desarrolladas a lo largo del semestre organizadas por fecha de clase.")
 
-st.divider()
+st.markdown("---")
 
-# 4. Organización por Fechas usando Tabs
+# ---------------------------------------------------------
+# PRIMERA ENTREGA
+# ---------------------------------------------------------
+st.subheader("📌 Primera Entrega")
+
 tab1, tab2, tab3, tab4 = st.tabs([
     "📅 20 de Agosto", 
     "📅 27 de Agosto", 
@@ -39,9 +43,7 @@ tab1, tab2, tab3, tab4 = st.tabs([
     "📅 17 de Septiembre"
 ])
 
-# ---------------------------------------------------------
 # CLASE 1: 20 DE AGOSTO
-# ---------------------------------------------------------
 with tab1:
     st.header("Clase: 20 de Agosto")
     st.caption("Introducción a interfaces interactivas y multimodalidad básica.")
@@ -60,9 +62,7 @@ with tab1:
             st.write("Interfaz multimodal capaz de procesar entrada de texto y sintetizar voz artificial.")
             st.link_button("Abrir Aplicación ↗", "https://interfacesmultiodalesj.streamlit.app/", use_container_width=True)
 
-# ---------------------------------------------------------
 # CLASE 2: 27 DE AGOSTO
-# ---------------------------------------------------------
 with tab2:
     st.header("Clase: 27 de Agosto")
     st.caption("Traducción de lenguaje natural, visión por computador u OCR.")
@@ -87,9 +87,7 @@ with tab2:
             st.write("Extracción de texto desde imágenes con lectura asistida mediante síntesis de voz.")
             st.link_button("Abrir Aplicación ↗", "https://ocr-audiojuu.streamlit.app/", use_container_width=True)
 
-# ---------------------------------------------------------
 # CLASE 3: 03 DE SEPTIEMBRE
-# ---------------------------------------------------------
 with tab3:
     st.header("Clase: 3 de Septiembre")
     st.caption("Procesamiento de Lenguaje Natural (PLN) y análisis de texto.")
@@ -114,9 +112,7 @@ with tab3:
             st.write("Cálculo de relevancia de palabras clave en corpus de texto en idioma español.")
             st.link_button("Abrir Aplicación ↗", "https://tdfespju.streamlit.app/", use_container_width=True)
 
-# ---------------------------------------------------------
 # CLASE 4: 17 DE SEPTIEMBRE
-# ---------------------------------------------------------
 with tab4:
     st.header("Clase: 17 de Septiembre")
     st.caption("Modelos avanzados de visión por computador y transferencia de aprendizaje.")
@@ -126,15 +122,4 @@ with tab4:
     with col1:
         with st.container(border=True):
             st.subheader("🔍 Detección de Objetos (YOLOv5)")
-            st.write("Identificación y localización de múltiples objetos en imágenes utilizando el modelo YOLOv5.")
-            st.link_button("Abrir Aplicación ↗", "https://yolov5juu.streamlit.app/", use_container_width=True)
-
-    with col2:
-        with st.container(border=True):
-            st.subheader("🧠 Teachable Machine")
-            st.write("Implementación de un modelo personalizado de clasificación de imágenes exportado de Teachable Machine.")
-            st.link_button("Abrir Aplicación ↗", "https://teachablemju.streamlit.app/", use_container_width=True)
-
-# Pie de página
-st.divider()
-st.caption("⚡ Repositorio desarrollado con Streamlit")
+            st
